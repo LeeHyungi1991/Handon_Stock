@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        {% load static %}
+        {% static "" as baseUrl %}
+        <title>HD주식</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="mobile portfolio, mobile portfolio site">
+        <meta name="author" content="kimsh">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="{% static 'js/jquery-1.8.3.min.js'%}"></script>
+        <script src="{% static 'js/jquery.mobile-1.2.0.min.js'%}"></script>
+        <link href="{% static 'css/jquery.mobile.structure-1.2.0.min.css'%}" rel="stylesheet">
+        <link href="{% static 'css/jquery.mobile.theme-1.2.0.min.css'%}" rel="stylesheet">
+        <link href="{% static 'css/jquery.mobile-1.2.0.min.css'%}" rel="stylesheet">
+        <link href="{% static 'css/photoswipe.css'%}" rel="stylesheet">
+        <link href="{% static 'css/style.css'%}" rel="stylesheet">
+        <link href="{% static 'css/detail.css'%}" rel="stylesheet">
+        <script src="{% static 'js/script.js'%}"></script>
+        <script src="{% static 'js/settings.js'%}"></script>
+        <script src="{% static 'js/klass.min.js'%}"></script>
+        <script src="{% static 'js/code.photoswipe.jquery-3.0.5.min.js'%}"></script>
+    </head>
+
+    <body>
+
+    <div data-role="page" id="buy">
+            <div class="headerspace"></div>
+            <div data-role="header" class="header">
+                <h1>{{name}}</h1>
+                <p>{{code}}  {{sosok}}</p>
+
+            </div>
+
+            <div data-role="content" id="buycontent" style="overflow-x:auto">
+                <div>
+                    <a data-theme="d" data-corners="false" data-role="button" href="#buy"> 매수</a>
+                    <a data-theme="d" data-corners="false" data-role="button" href="#sell"> 매도</a>
+
+                </div>
+                <div id="buycontentdiv">
+
+                </div>
+                <div class="orderbox" id="buybox">
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div id="buystockdown" class="col-1 updown stockdown">▼</div>
+                        <input type="text" id="buystock" placeholder="수량 입력" class="col-4">
+                        <div id="buystockup" class="col-1 updown stockup">▲</div>
+                        <div class="col-3"></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div id="buydown" class="col-1 updown stockpricedown">▼</div>
+                        <input type="text" min="50" step="50" value="{{f_down}}" id="buystockprice" class="col-4 price">
+                        <div id="buyup" class="col-1 updown stockpriceup">▲</div>
+                        <div class="col-3"></div>
+                    </div>
+                    <div class="buybtn orderbtn">구매하기
+                    <input type="hidden" value="0">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" value="{{f_down}}" id="f_down">
+
+            <input type="hidden" id="step">
+            <div id="buytoast" class="toast"></div>
+             <div class="footerspace"></div>
+            <div data-role="footer" class="footer">
+                 <ul>
+                    <li>
+                        <div class="main">
+                            메인
+                        </div>
+                    </li>
+                    <li>
+                        <div class="chart">
+                            차트
+                        </div>
+                    </li>
+                    <li>
+                        <div class="wallet">
+                            지갑
+                        </div>
+                    </li>
+                    <li>
+                        <div class="thispage">
+                            주문
+                        </div>
+                    </li>
+                    <li>
+                        <div class="menu">
+                            이체
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    <div data-role="page" id="sell">
+            <div class="headerspace"></div>
+            <div data-role="header" class="header">
+                <h1>{{name}}</h1>
+                <p>{{code}}  {{sosok}}</p>
+
+            </div>
+
+            <div data-role="content" id="sellcontent" style="overflow-x:auto">
+                <div>
+                    <a data-theme="d" data-corners="false" data-role="button" href="#buy"> 매수</a>
+                    <a data-theme="d" data-corners="false" data-role="button" href="#sell"> 매도</a>
+
+                </div>
+                <div id="sellcontentdiv">
+
+                </div>
+                <div class="orderbox" id="sellbox">
+
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div id="sellstockdown" class="col-1 updown stockdown">▼</div>
+                        <input type="text" id="sellstock" placeholder="수량 입력" class="col-4">
+                        <div id="sellstockup updown" class="col-1 updown stockup">▲</div>
+                        <div class="col-3"></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div id="selldown" class="col-1 updown stockpricedown">▼</div>
+                        <input type="text" min="50" step="50" value="{{f_up}}" id="sellstockprice" class="col-4 price">
+                        <div id="sellup" class="col-1 updown stockpriceup">▲</div>
+                        <div class="col-3"></div>
+                    </div>
+                    <div class="sellbtn orderbtn">판매하기
+                    <input type="hidden" value="1">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" value="{{f_up}}" id="f_up">
+        <div id="selltoast" class="toast"></div>
+             <div class="footerspace"></div>
+            <div data-role="footer" class="footer">
+                <ul>
+                    <li>
+                        <div class="main">
+                            메인
+                        </div>
+                    </li>
+                    <li>
+                        <div class="chart">
+                            차트
+                        </div>
+                    </li>
+                    <li>
+                        <div class="wallet">
+                            지갑
+                        </div>
+                    </li>
+                    <li>
+                        <div class="thispage">
+                            주문
+                        </div>
+                    </li>
+                    <li>
+                        <div class="menu">
+                            이체
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <input type="hidden" id="code" value="{{code}}">
+    </body>
+<script>
+
+
+$(document).ready(function(){
+
+$('.main').click(function(){
+    location.href = "home"
+})
+
+$('.chart').click(function(){
+    location.href = "stockchart?sosok=0&page=1"
+})
+
+$('.wallet').click(function(){
+    location.href = "stockwallet"
+})
+
+$('.order').click(function(){
+    location.href = "stockorder"
+})
+
+var code = $('#code').val()
+var f_down = $('#f_down').val().replace(/,/gi,'') * 1
+var f_up = $('#f_up').val().replace(/,/gi,'') * 1
+var step = f_down - f_up
+
+
+    $.ajax({ url:'hogatable?code='+code,
+        success:function(data){
+        data = data.replace(/&lt;/gi,'<').replace(/&gt;/gi, '>').replace(/&quot;/gi, '\"').replace(/&amp;/gi,"&")
+        $('#buycontentdiv').html(data)
+        $('#sellcontentdiv').html(data)
+        }
+    })
+
+    $('input').keyup(function(){
+
+        x = $(this).val()
+        x = x.replace(/[^0-9]/g,'');
+        x = x.replace(/,/g,'');
+        $(this).val(x.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
+        stock = $(this).parent().parent().children('div:first-child').children('input').val().replace(/,/gi,'')*1
+        price = $(this).parent().parent().children('div:nth-child(2)').children('input').val().replace(/,/gi,'')*1
+        count = stock*price
+        count += "";
+        count = count.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        btn = $(this).parent().parent().children('.orderbtn').text().split(' ')[0]
+        count = btn+' '+count+'원'
+        $(this).parent().parent().children('.orderbtn').text(count)
+
+    })
+
+    $('.price').focusout(function(){
+        var price = $(this).val().replace(/,/gi,'')*1
+        if((price%step)!=0){
+            price -= (price%step);
+            price += "";
+            price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            $(this).val(price)
+        }
+        stock = $(this).parent().parent().children('div:first-child').children('input').val().replace(/,/gi,'')*1
+        price = $(this).parent().parent().children('div:nth-child(2)').children('input').val().replace(/,/gi,'')*1
+        count = stock*price
+        count += "";
+        count = count.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        btn = $(this).parent().parent().children('.orderbtn').text().split(' ')[0]
+        count = btn+' '+count+'원'
+        $(this).parent().parent().children('.orderbtn').text(count)
+    })
+
+
+    $('.stockup').click(function(){
+        x = $(this).parent().children('input').val().replace(/,/gi,'')
+        if(x==''){
+            x='1'
+            $(this).parent().children('input').val(x)
+            return
+        }
+        x*=1;
+        if(x>0){
+            x+=1;
+            x+='';
+            x = x.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            $(this).parent().children('input').val(x)
+        }
+
+    })
+
+    $('.stockdown').click(function(){
+        x = $(this).parent().children('input').val().replace(/,/gi,'')
+        if(x==''){
+            return
+        }
+        x *=1
+        if((x-1)==0){
+            $(this).parent().children('input').val('')
+            return
+        }
+        if((x-1)>0){
+            x -= 1;
+            x += "";
+            x = x.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            $(this).parent().children('input').val(x)
+            return
+        }
+
+    })
+
+
+    $('.stockpriceup').click(function(){
+        price = $(this).parent().children('input').val().replace(/,/gi,'')*1
+        price += step;
+        price += "";
+        price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        $(this).parent().children('input').val(price)
+
+    })
+
+    $('.stockpricedown').click(function(){
+        var price = $(this).parent().children('input').val().replace(/,/gi,'')*1
+        if((price-step)<=0){
+            alert('가격을 확인해 주세요')
+            return
+        }else{
+            price -= step;
+            price += "";
+            price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            $(this).parent().children('input').val(price)
+        }
+    })
+
+    $('.updown').click(function(){
+        stock = $(this).parent().parent().children('div:first-child').children('input').val().replace(/,/gi,'')*1
+        price = $(this).parent().parent().children('div:nth-child(2)').children('input').val().replace(/,/gi,'')*1
+        count = stock*price
+        count += "";
+        count = count.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        btn = $(this).parent().parent().children('.orderbtn').text().split(' ')[0]
+        count = btn+' '+count+'원'
+        $(this).parent().parent().children('.orderbtn').text(count)
+
+    })
+
+    $('.buybtn').click(function(){
+
+        stock = $('#buystock').val().replace(/,/gi,'')
+        price = $('#buystockprice').val().replace(/,/gi,'')
+        code = $('#code').val()
+        sellprice = $('#f_down').val().replace(/,/gi,'')
+        if(stock==''){
+            buytoast("주식 수를 확인해주세요")
+            return
+        }
+        $.ajax({ url:'buyorder',
+         type : 'POST',
+         data : {'stock' : stock,
+                'price' : price,
+                'code' : code,
+                'sellprice' : sellprice},
+            success:function(data){
+                buytoast(data)
+            }
+        })
+
+    })
+
+    $('.sellbtn').click(function(){
+
+        stock = $('#sellstock').val().replace(/,/gi,'')
+        price = $('#sellstockprice').val().replace(/,/gi,'')
+        code = $('#code').val()
+        buyprice = $('#f_up').val().replace(/,/gi,'')
+        if(stock==''){
+            selltoast("주식 수를 확인해주세요")
+            return
+        }
+        $.ajax({ url:'sellorder',
+         type : 'POST',
+         data : {'stock' : stock,
+                'price' : price,
+                'code' : code,
+                'buyprice' : buyprice},
+            success:function(data){
+
+                selltoast(data)
+            }
+        })
+    })
+
+
+
+
+
+
+})
+let removeToast;
+function selltoast(string) {
+    const toast = document.getElementById("selltoast");
+
+    toast.classList.contains("reveal") ?
+        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+            document.getElementById("selltoast").classList.remove("reveal")
+        }, 3000)) :
+        removeToast = setTimeout(function () {
+            document.getElementById("selltoast").classList.remove("reveal")
+        }, 3000)
+    toast.classList.add("reveal"),
+        toast.innerText = string
+}
+function buytoast(string) {
+    const toast = document.getElementById("buytoast");
+
+    toast.classList.contains("reveal") ?
+        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+            document.getElementById("buytoast").classList.remove("reveal")
+        }, 3000)) :
+        removeToast = setTimeout(function () {
+            document.getElementById("buytoast").classList.remove("reveal")
+        }, 3000)
+    toast.classList.add("reveal"),
+        toast.innerText = string
+}
+</script>
+
+</html>

@@ -1,0 +1,23 @@
+
+<div class="title">
+                    <div class="titleid">
+                    <span style="font-size:30px; color:{{color}}">{{price}}</span><br>
+                    <span style="color:{{color}}">{{priceupdown}}  {{priceper}}</span>
+                    </div>
+
+                </div>
+                    <div class="orderdiv">
+                        <p1>이 주식을 주문해보세요!</p1>
+                        <input type="button" value="주문" id="order">
+                    </div>
+                <ul class="total_lst">
+                    <li><img src="{{chart}}"></li>
+                    <li><div>전일</div> <span>{{yesterday}}</span></li>
+                    <li><div>시가</div> <span style="color:{{sigacolor}}">{{pricesiga}}</span></li>
+                    <li><div>저가</div> <span style="color:{{mincolor}}">{{pricemin}}</span></li>
+                    <li><div>고가</div> <span style="color:{{maxcolor}}">{{pricemax}}</span></li>
+                    <li><div>거래량</div> <span>{{dill}}</span></li>
+                    <li><div>거래대금</div> <span>{{dillprice}}백만</span></li>
+                    <li><p style="width:100%;">호가 5단계</p></li>
+                </ul>
+{{hoga}}

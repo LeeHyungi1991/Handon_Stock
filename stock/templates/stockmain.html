@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        {% load static %}
+        {% static "" as baseUrl %}
+        <title>HD주식</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="mobile portfolio, mobile portfolio site">
+        <meta name="author" content="kimsh">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="{% static 'js/jquery-1.8.3.min.js'%}"></script>
+        <script src="{% static 'js/jquery.mobile-1.2.0.min.js'%}"></script>
+        <link href="{% static 'css/jquery.mobile.structure-1.2.0.min.css'%}" rel="stylesheet">
+        <link href="{% static 'css/jquery.mobile.theme-1.2.0.min.css'%}" rel="stylesheet">
+        <link href="{% static 'css/jquery.mobile-1.2.0.min.css'%}" rel="stylesheet">
+        <link href="{% static 'css/photoswipe.css'%}" rel="stylesheet">
+        <link href="{% static 'css/detail.css'%}" rel="stylesheet">
+        <link href="{% static 'css/style.css'%}" rel="stylesheet">
+        <script src="{% static 'js/script.js'%}"></script>
+        <script src="{% static 'js/settings.js'%}"></script>
+        <script src="{% static 'js/klass.min.js'%}"></script>
+        <script src="{% static 'js/code.photoswipe.jquery-3.0.5.min.js'%}"></script>
+    </head>
+    <body>
+
+        <!-- homepage -->
+             <div class="headerspace"></div>
+            <div data-role="header" class="header">
+                <h1>HD주식</h1>
+            </div>
+            <div data-role="content">
+                <div class="row">
+                    <div class="col-1"></div>
+                <input class="col-8" type="text" id="searchname"> <input class="col-3" type="button" id="searchbtn" value="검색">
+                    </div>
+                <p style="color:red;margin:0;" id="msg" class="msg">{{msg}}</p>
+                <div class="pt-menu">
+                        <div data-theme="d" data-corners="false" data-role="button" href="#profile" style="width:260px">
+                            <div id="account">
+                                계좌: <br>
+                                출금 가능금액:
+                            </div>
+                        </div>
+
+                        <div data-theme="d" data-corners="false" id="chart" data-role="button" >
+
+                            주식순위
+
+                        </div>
+
+                        <div data-theme="d" data-corners="false" data-role="button" id="wallet">
+
+                            주식지갑
+                        </div>
+
+                        <div data-theme="d" data-corners="false" data-role="button" id="order">
+
+                            주식주문
+                        </div>
+
+                        <div data-theme="d" data-corners="false" data-role="button" href="#contact">
+
+                            계좌이체
+                        </div>
+
+                    </div>
+                <a id="logout">logout</a>
+            </div>
+            <div class="footerspace"></div>
+            <div data-role="footer" class="footer">
+                <h2>HD금융</h2>
+                <p class="copyright">&copy; Copyright 2020</p>
+            </div>
+    </body>
+    <script>
+$(document).ready(function(){
+    $.ajax({
+        url:'account_ajax',
+        success:function(data){
+            $('#account').html(data)
+        }
+    })
+
+
+    $('#chart').click(function(){
+        location.href="stockchart?sosok=0&page=1"
+    })
+
+    $('#order').click(function(){
+        location.href="stockorder"
+    })
+    $('#wallet').click(function(){
+        location.href="stockwallet"
+    })
+
+    $('#logout').click(function(){
+        location.href="logout"
+    })
+
+    $('.ui-btn-corner-all').click(function(){
+        if($('#searchname').val() == ''){
+            $('#msg').text('이름을 확인해주세요.')
+        }else{
+            location.href="stockdetail?name="+$('#searchname').val()
+        }
+    })
+})
+
+
+    </script>
+</html>

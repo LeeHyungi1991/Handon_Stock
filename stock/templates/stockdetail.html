@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        {% load static %}
+        {% static "" as baseUrl %}
+        <title>HD주식</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="mobile portfolio, mobile portfolio site">
+        <meta name="author" content="kimsh">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="{% static 'js/jquery-1.8.3.min.js'%}"></script>
+        <script src="{% static 'js/jquery.mobile-1.2.0.min.js'%}"></script>
+        <link href="{% static 'css/jquery.mobile.structure-1.2.0.min.css'%}" rel="stylesheet">
+        <link href="{% static 'css/jquery.mobile.theme-1.2.0.min.css'%}" rel="stylesheet">
+        <link href="{% static 'css/jquery.mobile-1.2.0.min.css'%}" rel="stylesheet">
+        <link href="{% static 'css/photoswipe.css'%}" rel="stylesheet">
+        <link href="{% static 'css/style.css'%}" rel="stylesheet">
+        <link href="{% static 'css/detail.css'%}" rel="stylesheet">
+        <script src="{% static 'js/script.js'%}"></script>
+        <script src="{% static 'js/settings.js'%}"></script>
+        <script src="{% static 'js/klass.min.js'%}"></script>
+        <script src="{% static 'js/code.photoswipe.jquery-3.0.5.min.js'%}"></script>
+    </head>
+
+    <body>
+
+        <div class="headerspace"></div>
+            <div data-role="header" class="header">
+                <h1>{{name}}</h1>
+                <p>{{code}}  {{sosok}}</p>
+
+            </div>
+
+            <div data-role="content" id="content" style="overflow-x:auto">
+                <img src="{% static 'images/loading.gif' %}">
+            </div>
+        <div class="footerspace"></div>
+            <div data-role="footer" class="footer">
+                 <ul>
+                    <li>
+                        <div class="main">
+                            메인
+                        </div>
+                    </li>
+                    <li>
+                        <div class="chart">
+                            차트
+                        </div>
+                    </li>
+                    <li>
+                        <div class="wallet">
+                            지갑
+                        </div>
+                    </li>
+                    <li>
+                        <div class="order">
+                            주문
+                        </div>
+                    </li>
+                    <li>
+                        <div class="menu">
+                            이체
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+    <input type="hidden" id="code" value="{{code}}">
+    </body>
+<script>
+$(document).ready(function(){
+$('.main').click(function(){
+    location.href = "home"
+})
+
+$('.chart').click(function(){
+    location.href = "stockchart?sosok=0&page=1"
+})
+
+$('.wallet').click(function(){
+    location.href = "stockwallet"
+})
+
+$('.order').click(function(){
+    location.href = "stockorder"
+})
+
+
+
+var code = $('#code').val()
+    $.ajax({ url:'stocktoday?code='+code,
+    success:function(data){
+    data = data.replace(/&lt;/gi,'<').replace(/&gt;/gi, '>').replace(/&quot;/gi, '\"').replace(/&amp;/gi,"&")
+
+        $('#content').html(data)
+
+        $('#order').on('click',function(){
+                 location.href = 'stockorder'
+
+        })
+
+
+        }
+    })
+
+
+ajaxdetail = setInterval(function(){
+
+},10000);
+
+
+
+
+})
+
+
+</script>
+
+</html>
